@@ -47,3 +47,51 @@
     {
         
     }
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <fstream>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    ofstream plik;
+    plik.open("/Users/student/zadaniee3/test.txt");
+    plik<<"test zapisu";
+    plik.close();
+
+    ifstream plik2;
+
+
+    string n1;
+    cin>>n1;
+
+    string::iterator it = n1.begin();
+    char znak;
+
+    int coute=0;
+
+    plik2.open("/Users/student/zadaniee3/test.txt");
+    while (gets(plik2,znak))
+    {
+        if(*it==znak)
+        {
+            it++;
+            if(it==n1.end())
+            {
+                coute++;
+                it=n1.begin();
+            }
+        }
+        else
+        {
+            it=n1.begin();
+        }
+    }
+
+    cout<<coute<<endl;
+
+
+    return 0;
+}
