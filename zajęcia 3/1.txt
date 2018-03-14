@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <iterator>
+
+using namespace std;
+
+int main()
+{
+
+    string napis;
+    getline(cin, napis);
+
+    char a = napis[0],z = napis[0];
+
+    transform(napis.begin(),napis.end(),napis.begin(), ::tolower);
+
+    for(string::iterator it1 = napis.begin();it1 != napis.end(); it1++)
+    {
+        if(*it1<a && *it1>='a')
+            a = *it1;
+        if(*it1>z && *it1>='a')
+            z = *it1;
+    }
+
+
+    cout << napis << endl;
+    cout << a << endl;
+    cout << z << endl;
+
+    return 0;
+    }

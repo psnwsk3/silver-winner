@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <iterator>
+#include <fstream>
+
+
+using namespace std;
+
+int main()
+{
+
+    //zadanie 3
+    ofstream plik;
+
+    plik.open("plik.txt");
+
+    if(plik.good()==false)
+    {
+        cout << "brak pliku" << endl;
+        return 1;
+    }
+
+    string tekst;
+    getline(cin, tekst);
+
+    string::iterator it1 = tekst.begin();
+
+    int i=0;
+
+    while(it1 != tekst.end())
+    {
+        if(i==20)
+        {
+            tekst.insert(it1,'\n');
+            i=0;
+            it1++;
+        }
+        i++;
+        it1++;
+    }
+
+    plik << tekst;
+
+    plik.close();
+
+    return 0;
+}

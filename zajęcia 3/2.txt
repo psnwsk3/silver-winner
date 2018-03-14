@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+#include <iterator>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+
+    string napis;
+    getline(cin, napis);
+
+    string nap1, nap2;
+
+    cin >> nap1;
+    cin >> nap2;
+
+    string::iterator it2 = nap1.begin();
+    string::iterator it3 = nap1.end();
+
+    int leng2 = nap2.length();
+    int leng1 = nap1.length();
+
+    for(string::iterator it1 = napis.begin();it1 != napis.end(); it1++)
+    {
+        if(*it1==*it2)
+        {
+            if(it2+1==nap1.end())
+                {
+                    it1 = it1-leng1+1;
+                    napis.erase(it1,it1+leng1);
+                    napis.insert(it1,nap2.begin(),nap2.end());
+                }
+            it2++;
+        }
+        else
+        {
+            it2 = nap1.begin();
+        }
+    }
+
+    cout << napis << endl;
+
+    return 0;
+}
