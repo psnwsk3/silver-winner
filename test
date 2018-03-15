@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+class punkt2D
+{
+private:
+    int x, y;
+public:
+    punkt2D (int x, int y)
+    {
+        this->x=x;
+        this->y=y;
+    }
+    int getX()
+    {
+        return x;
+    }
+    int getY()
+    {
+        return y;
+    }
+};
+
+class punkt3D : public punkt2D
+{
+private:
+    int z;
+public:
+    punkt3D (int x, int y, int z) : punkt2D(x,y)
+    {
+        this->z=z;
+    }
+    int getZ()
+    {
+        return z;
+    }
+};
+
+int main()
+{
+    punkt2D pkt1(1,2);
+
+    cout << pkt1.getX() << pkt1.getY() << endl;
+
+    punkt3D pkt2(3,4,5);
+
+    cout << pkt2.getX() << pkt2.getY() << pkt2.getZ() << endl;
+
+    return 0;
+}
