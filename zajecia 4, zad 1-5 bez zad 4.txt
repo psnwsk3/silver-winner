@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class User
+{
+protected:
+    string login;
+    string password;
+
+public:
+    User(){}
+
+    User(string login, string password)
+    {
+        this->login = login;
+        this->password = password;
+    }
+
+    bool authorize(string log, string pass)
+    {
+        if(log == login && pass == password)
+            return true;
+        return false;
+    }
+};
+
+class Student : public User
+{
+private:
+    int semestr;
+
+public:
+    Student(){}
+
+    Student(int semestr) :User(login, password)
+    {
+        this->semestr = semestr;
+    }
+};
+
+class Subject
+{
+private:
+    string name;
+    int maxx;
+    int counter;
+    Student tab[100];
+
+public:
+    Subject(string name, int maxx)
+    {
+        this->name = name;
+        this->maxx = maxx;
+        this->counter = 0;
+    }
+    bool addStudent(Student stud)
+    {
+        if(counter > maxx)
+            return false;
+        else
+        {
+            counter++;
+            this->tab[counter] = stud;
+            return true;
+        }
+    }
+    Subject(Subject &sub)
+    {
+        this->name = sub.name;
+        this->maxx = sub.maxx;
+        this->counter = 0;
+    }
+
+};
+int main()
+{
+    cout << "Hello world!" << endl;
+    return 0;
+}
