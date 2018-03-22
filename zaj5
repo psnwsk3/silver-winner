@@ -1,0 +1,135 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+class Villager
+{
+private:
+    string *name;
+    unsigned int age, age_MAX;
+    bool gender;
+    string tab_name[5];
+
+public:
+    Villager()
+    {
+        this->age_MAX=(rand()+1)%100;
+        *this->name=tab_name[rand() %5];
+        this->age=1;
+    }
+
+    Villager(Villager &Vill)
+    {
+        this->name=new string;
+        *this->name=Vill.getName();
+    }
+
+    Villager(string name, int age, int age_MAX, bool gender)
+    {
+        *this->name=name;
+        this->age=age;
+        this->age_MAX=age_MAX;
+        this->gender=gender;
+    }
+    void setName(string name)
+    {
+        *this->name=name;
+    }
+    string getName()
+    {
+        return *this->name;
+    }
+    void birth()
+    {
+        this->age=age+1;
+
+        if(this->age == age_MAX)
+        {
+            delete this;
+        }
+    }
+    bool getGender()
+    {
+        return gender;
+    }
+    int getAge()
+    {
+        return age;
+    }
+
+    ~Villager()
+    {
+        cout << *this->name << " " << age << endl;
+        delete this->name;
+    }
+};
+
+class Household
+{
+private:
+    Villager **tab;
+    int i;
+
+public:
+    Household(int i)
+    {
+        this->i=i;
+
+    }
+
+    void age_up()
+    {
+        for(int j=0;j<i;j++){
+            
+            if(&tab[j] == NULL){
+                
+                for(int j=0;j<i;j++){
+                    
+                    if(tab[j]->getAge()>=5){
+                        break
+                    }
+                    else{
+                        
+                        for(int j=0;j<i;j++){
+                        
+                        if(tab[j]->getGender()==1 && tab[j]->getAge()<=18 && tab[j]->getAge()>=40){
+                            for(int j=0;j<i;j++)
+                            {
+                                if(tab[j]->getGender()==0 && tab[j]->getAge()<=18 && tab[j]->getAge()>=40)
+                                {
+                                
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        for(int j=0;j<i;j++)
+        {
+            if(&tab[j] != NULL)
+                tab[j]->birth();
+        }
+    }
+
+
+
+};
+
+int main(int argc, char *argv[])
+{
+    srand(time(NULL));
+    double *x;
+    x = new  double;
+    *x = 5;
+
+    cout << x << " " << *x << endl;
+    delete x;
+
+    return 0;
+}
