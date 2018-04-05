@@ -1,0 +1,126 @@
+#include <iostream>
+
+using namespace std;
+
+class Polygon
+{
+public:
+    struct Point
+    {
+        float x, y;
+    };
+private:
+    Point **tab;
+    int size;
+    int all;
+public:
+    Polygon()
+    {
+        all = 0;
+        size = 4;
+        tab = new Point*[4];
+        for(int i=0;i>4;i++)
+        {
+            tab[i] = new Point();
+            all++;
+        }
+
+    }
+    Polygon(int x)
+    {
+        while(x%4!=0)
+        {
+            x++;
+        }
+        this->size = x;
+        tab = new Point*[x];
+    }
+    Polygon(Polygon &Pol)
+    {
+        size = Pol.size;
+        all = Pol.all;
+        tab = new Point*[size];
+
+        for(int i=0;i<size;i++)
+        {
+            tab[i] = new Point();
+            this->tab[i]->x = Pol.tab[i]->x;
+            this->tab[i]->y = Pol.tab[i]->y;
+
+        }
+    }
+    ~Polygon()
+    {
+        delete tab;
+    }
+
+    void addPoint(Point* p)
+    {
+        if(all==size)
+        {
+            Point **tmp = tab;
+            this->size = size+4;
+            tab = new Point*[size];
+            for(int i=0;i<size;i++)
+            {
+                tab[i]=tmp[i];
+            }
+            delete tmp;
+
+        }
+
+        tab[all]= p;
+        all++;
+
+    }
+    void show()
+    {
+        for(int i=0;i<all;i++)
+        {
+            cout << tab[i]->x << " " << tab[i]->y << endl;
+        }
+    }
+    Point &getPoint(int x, int y)
+    {
+        return tab[x][y];
+    }
+
+};
+
+int main(int argc, char *argv[])
+{
+    Polygon* p1=new Polygon;
+
+    Polygon::Point* a1= new Polygon::Point();
+    a1->x=5;
+    a1->y=6;
+    Polygon::Point* a2= new Polygon::Point();
+    a2->x=5;
+    a2->y=6;
+    Polygon::Point* a3= new Polygon::Point();
+    a3->x=5;
+    a3->y=6;
+    Polygon::Point* a4= new Polygon::Point();
+    a4->x=5;
+    a4->y=6;
+    Polygon::Point* a5= new Polygon::Point();
+    a5->x=5;
+    a5->y=6;
+
+    p1->addPoint(a1);
+    p1->addPoint(a2);
+    p1->addPoint(a3);
+    p1->addPoint(a4);
+    p1->addPoint(a5);
+    cout << "to tu" << endl;
+    p1->show();
+
+    Polygon* p2(p1);
+
+    //p2->show();
+
+    //cout << p1->getPoint(0,0).x << " " << p1->getPoint(0,0).y << endl;
+
+    cout << "Hello World!" << endl;
+    return 0;
+}
