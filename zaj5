@@ -8,50 +8,53 @@ using namespace std;
 class Villager
 {
 private:
-    string *name;
-    unsigned int age, age_MAX;
+    string maleName[10]={"Janusz", "Donald", "Lech", "Jarosław", "Andrzej"};
+    string femaleName[10]={"Januszka","Twoja stara", "Kazimiera", "Katarzyna", "Zbyszka", "Justyna"};
+
+    string name;
+    int age_max;
+    int age;
     bool gender;
-    string tab_name[5];
 
 public:
     Villager()
     {
-        this->age_MAX=(rand()+1)%100;
-        *this->name=tab_name[rand() %5];
-        this->age=1;
+        age = 0;
+        age_max = rand()%101;
+        gender = rand()%2;
+
+        if(gender == 1)
+        {
+            name = maleName[rand()%5];
+        }
+        else
+        {
+            name = femaleName[rand()%6];
+        }
+
+        cout << name << " urodzil" << (!gender ? "a" : "") << " sie" << endl;
     }
 
-    Villager(Villager &Vill)
+    Villager(string name, int age, int age_max, bool gender)
     {
-        this->name=new string;
-        *this->name=Vill.getName();
-    }
-
-    Villager(string name, int age, int age_MAX, bool gender)
-    {
-        *this->name=name;
         this->age=age;
-        this->age_MAX=age_MAX;
+        this->age_max=age_max;
+        this->name=name;
         this->gender=gender;
-    }
-    void setName(string name)
-    {
-        *this->name=name;
-    }
-    string getName()
-    {
-        return *this->name;
-    }
-    void birth()
-    {
-        this->age=age+1;
 
-        if(this->age == age_MAX)
+        cout << name << " w wieku "  << age << " przybyl" << (!gender ? "a" : "") << " do osady" << endl;
+    }
+
+    void age_up()
+    {
+        this->age++;
+
+        if(this->age == age_max)
         {
             delete this;
         }
     }
-    bool getGender()
+    int getGender()
     {
         return gender;
     }
@@ -59,77 +62,126 @@ public:
     {
         return age;
     }
+    string getName()
+    {
+        return name;
+    }
 
     ~Villager()
     {
-        cout << *this->name << " " << age << endl;
-        delete this->name;
+        cout << name << " umarl" << (!gender ? "a" : "") << endl;
     }
 };
 
 class Household
 {
 private:
-    Villager **tab;
-    int i;
+    int cur;
+    int max_;
+    Villager **hous;
 
 public:
-    Household(int i)
+    Household(int max_)
     {
-        this->i=i;
-
+        hous = new Villager*[max_];
+        this->max_ = max_;
+        this->cur = 0;
     }
+    bool addVillager(Villager *new_)
+    {
+        if(cur >= max_)
+        {
+            cout << "brak miejsc" << endl;
+            return false;
+        }
 
+        hous[cur] = new_;
+        cur++;
+        return true;
+    }
+    void show()
+    {
+        for(int i=0;i<max_;i++)
+        {
+            if(hous[i] != NULL)
+            {
+                cout << "zajete" << " przez " <<hous[i]->getName()<< " " << hous[i]->getAge() << endl;
+            }
+            else
+                cout << "wolne" << endl;
+        }
+    }
     void age_up()
     {
-        for(int j=0;j<i;j++){
-            
-            if(&tab[j] == NULL){
-                
-                for(int j=0;j<i;j++){
-                    
-                    if(tab[j]->getAge()>=5){
-                        break
+        int czy;
+        if(czy == 0)
+        {
+            Villager *vi = new Villager;
+            addVillager(vi);
+        }
+        for(int j=0;j<max_;j++)
+            if(hous[j] != NULL) // sprawczenie czy jest wlone mejsce
+            {
+
+            }
+            else
+            {
+
+                for(int j=0;j<cur;j++)
+                    if(hous[j]->getAge()<=5)// sprawdzenie czy jest ktoś młodszy niż 5 lat
+                    {
+                        czy = 1;
+                        break;
                     }
-                    else{
-                        
-                        for(int j=0;j<i;j++){
-                        
-                        if(tab[j]->getGender()==1 && tab[j]->getAge()<=18 && tab[j]->getAge()>=40){
-                            for(int j=0;j<i;j++)
+                    else
+                    {
+                        for(int j=0;j<cur;j++)
+                            if(hous[j]->getGender()==1 && hous[j]->getAge() >=18 && hous[j]->getAge() <=40) // sprawdzenie czy jest odpowiedni mężczyzna
                             {
-                                if(tab[j]->getGender()==0 && tab[j]->getAge()<=18 && tab[j]->getAge()>=40)
-                                {
-                                
-                                    break;
-                                }
+                                for(int j=0;j<cur;j++)
+                                    if(hous[j]->getGender()==0 && hous[j]->getAge()>=18 && hous[j]->getAge()<=40) // sprawdzenie czy jest odpowiednia kobieta
+                                    {
+                                        czy = 0;
+                                        break;
+                                    }
                             }
                             break;
-                        }
                     }
-                }
+                    break;
             }
-        }
-        for(int j=0;j<i;j++)
+        for(int j=0;j<cur-1;j++)
         {
-            if(&tab[j] != NULL)
-                tab[j]->birth();
+            if(hous[j] != NULL)
+                hous[j]->age_up();
         }
     }
 
-
-
 };
-
-int main(int argc, char *argv[])
+int main()
 {
     srand(time(NULL));
-    double *x;
-    x = new  double;
-    *x = 5;
 
-    cout << x << " " << *x << endl;
-    delete x;
+    Villager *vi1 = new Villager("Maciek", 18, 21, 1);
+    Villager *vi3 = new Villager("Jan", 20, 100, 1);
+    Villager *vi4 = new Villager("Ania", 20, 100, 0);
+    //Villager vi2;
+
+    Household h1(5);
+
+
+
+    h1.addVillager(vi1);
+    h1.addVillager(vi3);
+    h1.addVillager(vi4);
+    h1.age_up();
+    h1.age_up();
+    //h1.addVillager(&vi2);
+    h1.show();
+
+    vi1->age_up();
+    vi1->age_up();
+
+
 
     return 0;
 }
