@@ -1,0 +1,92 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+
+class B1
+{
+public:
+    B1()
+    {
+        cout<<"konstruktor B"<<endl;
+    }
+
+    void metoda()
+    {
+        cout<< "metoda B"<<endl;
+    }
+
+
+};
+
+class B2
+{
+public:
+    void metoda()
+    {
+        cout<< "metoda B2"<<endl;
+    }
+};
+
+class P :public B1, public B2
+{
+private:
+    int *x;
+public:
+    P()
+    {
+        cout<<"konstruktor P"<<endl;
+        x = new int;
+        *x = 0;
+    }
+    void metoda()
+    {
+        cout<<"metoda P"<<endl;
+        *x = 45;
+    }
+
+
+    void test()
+    {
+        cout << "test P"<<endl;
+        B1::metoda();
+        B2::metoda();
+    }
+};
+
+
+class Person
+{
+protected:
+    string name;
+};
+
+class Teacher
+{
+private:
+    string title;
+};
+
+int main(int argc, char *argv[])
+{
+
+    P p;
+
+    B1 *b = &p;
+
+    p.test();
+    /*
+    P p;
+    p.setX(11);
+    cout<< p.getX() <<endl;
+
+    B1 *b = &p; //rzutowanie w górę
+    b->metoda();
+
+    cout<< p.getX() <<endl;*/
+
+
+
+    return 0;
+}
