@@ -1,0 +1,101 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+
+class B1
+{
+public:
+    B1()
+    {
+        cout<<"konstruktor B"<<endl;
+    }
+
+    virtual void metoda()
+    {
+        cout<< "metoda B"<<endl;
+    }
+
+    virtual void czystVir() = 0;
+
+    virtual ~B1()
+    {
+        cout<<"destruktor B"<<endl;
+    }
+};
+
+class B2
+{
+public:
+    void metoda()
+    {
+        cout<< "metoda B2"<<endl;
+    }
+};
+
+class P :public B1, public B2
+{
+private:
+    int *x;
+public:
+    P()
+    {
+        cout<<"konstruktor P"<<endl;
+        x = new int;
+        *x = 0;
+    }
+    virtual void metoda()
+    {
+        cout<<"metoda P"<<endl;
+        *x = 45;
+    }
+
+    virtual void czystVir() override
+    {
+        cout<< "czystVir" <<endl;
+    }
+
+    void test()
+    {
+        cout << "test P"<<endl;
+    }
+
+    void setX(int x)
+    {
+        *this->x=x;
+    }
+
+    int getX()
+    {
+        return *x;
+    }
+
+    virtual ~P()
+    {
+        cout<<"destruktor P"<<endl;
+        delete x;
+    }
+};
+
+int main(int argc, char *argv[])
+{
+
+    P p;
+
+    B1 *b = &p;
+    b->czystVir();
+    /*
+    P p;
+    p.setX(11);
+    cout<< p.getX() <<endl;
+
+    B1 *b = &p; //rzutowanie w górę
+    b->metoda();
+
+    cout<< p.getX() <<endl;*/
+
+
+
+    return 0;
+}
