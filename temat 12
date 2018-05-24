@@ -1,0 +1,262 @@
+#include <iostream>
+/////////////tak działa wektor
+using namespace std;
+
+
+
+//#ifndef ARRAY_H
+//#define ARRAY_H
+
+//template <typename T>
+//class Array {
+//    unsigned int m_size;
+//    T *arr;
+//public:
+
+//    class iterator
+//    {
+//        T *ptr;
+//    public:
+//        iterator(T *ptr) {
+//            this->ptr=ptr;
+
+//        }
+
+//        T& operator *(){
+//        return *ptr;
+//        }
+
+//        T* operator ->(){
+//        return ptr;
+//        }
+//        bool operator ==(const iterator &right)
+//        {
+//            return ptr == right.ptr;
+//        }
+
+//        bool operator !=(const iterator &right)
+//        {
+//            return ptr != right.ptr;
+//        }
+//        iterator operator ++(int)
+//        {
+//            ptr++;
+//            return *this;
+//        }
+
+//        iterator& operator ++()
+//        {
+//            iterator &it=*this;
+//            ptr++;
+//            return it;
+//        }
+
+//    };
+
+
+
+//    Array(int size);
+//    ~Array();
+//    int size();
+//    T& operator[](int index);
+
+
+//    iterator begin();
+//    iterator end();
+
+//};
+
+//template <typename T>
+//Array<T>::Array(int size) {
+//    this->m_size=size;
+//    this->arr=new T[size];
+//}
+
+//template <typename T>
+//Array<T>::~Array() {
+//    delete [] arr;
+//}
+
+//template <typename T>
+//int Array<T>::size() {
+//    return m_size;
+//}
+
+//template <typename T>
+//T& Array<T>::operator[](int index) {
+//    return arr[index];
+//}
+
+
+//    template <typename T>
+//    typename Array<T>::iterator Array<T>::begin()
+//    {
+//        return iterator(arr);
+//    }
+
+//template <typename T>
+//typename Array<T>::iterator Array<T>::end()
+//{
+//    return iterator(arr+m_size);
+//}
+
+//#endif // ARRAY_H
+
+
+
+
+//int main()
+//{
+//    Array <double> arr(5);
+//    arr[3]=100;
+
+////    for(int i=0 ; i<arr.size(); ++i)
+////    {
+////        cout<<arr[i]<<endl;
+////    }
+
+//////dwie różne metody
+//////pierwsza
+//    for(Array<double>::iterator it=arr.begin(); it!=arr.end(); it++)
+//    cout<<*it<<endl;
+
+
+//////druga
+////    for(double d : arr)
+////        cout<<d<<endl;
+//    cout << "Hello World!" << endl;
+//    return 0;
+//}
+
+
+
+
+//zad2
+#ifndef LIST_H
+#define LIST_H
+template <typename T>
+class List{
+
+    struct Node
+    {
+        T value;
+        Node *next;
+
+    };
+
+    Node *head, *tail;
+
+
+
+public:
+    List();
+    ~List();
+    bool empty();
+    unsigned int size();
+    T &front();
+    T &back();
+    void push_front(T);
+    void push_back(T);
+    void pop_front();
+    void pop_back();
+
+
+
+    void display();
+};
+
+
+
+template <typename T>
+List<T>::List()
+{
+    head = nullptr;
+    tail = nullptr;
+}
+template <typename T>
+List<T>::~List()
+{
+
+}
+template <typename T>
+bool List<T>::empty()
+{
+    return head == nullptr;
+
+}
+template <typename T>
+unsigned int List<T>::size()
+{
+
+}
+template <typename T>
+ T &List<T>::front()
+{
+     return head->value;
+
+}
+template <typename T>
+T &List<T>::back()
+{
+    return tail->value;
+}
+template <typename T>
+void List<T>::push_front(T value)
+{
+    Node *n = new Node{value, head};
+       head = n;
+}
+template <typename T>
+void List<T>::push_back( T value)
+{
+     Node *n = new Node{value, nullptr};
+    if(empty())
+    {
+        head = n;
+    }
+    else
+    {
+        tail->next=n;
+    }
+    tail = n;
+}
+template <typename T>
+void List<T>::pop_front()
+{
+    if (empty()){
+        return ;
+    if(head==tail){
+            delete head;
+            head=nullptr;
+            tail=nullptr;
+        }
+    else{
+        Node*tmp=head;
+        head=head->next;
+        delete tmp;
+
+    }
+    }
+
+
+}
+template <typename T>
+void List<T>::pop_back()
+{
+
+}
+
+
+
+//void display();
+#endif //LIST_H
+int main()
+{
+  List<double> l;
+  l.push_back(5);
+  l.push_front(10);
+  l.pop_front();
+  cout<<l.front()<<l.back()<<endl;
+    return 0;
+}
+
